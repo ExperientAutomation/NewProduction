@@ -1,0 +1,9 @@
+ChromeDriver=N://QA//R&DQA//Selenium//Drivers//chromedriver.exe
+
+ShowManagerURL=http://rdqashowman.experientevent.com
+NotRun_ShowManagerURL=http://showmanager.experientevent.com
+showcode=TST000
+
+excelpath=N://QA//R&DQA//Selenium//Chandra Workspace//Data//NewProduction//Automation Test test cases for New Production.xlsx
+
+emailid=chandrasekhar.Kulandasamy@experient-inc.com
