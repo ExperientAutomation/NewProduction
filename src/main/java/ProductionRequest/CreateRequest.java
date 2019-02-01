@@ -1,34 +1,25 @@
 package ProductionRequest;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.poi.util.SystemOutLogger;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import utils.emailReport;
 import utils.ConfigReader;
 import utils.WinUtils;
 import utils.XlsUtil;
@@ -54,16 +45,13 @@ public class CreateRequest {
 
 		prodreqname = "Auto Test Request " + ((int) (Math.random() * 10000));
 		return prodreqname;
-
 	}
 	
 	@Test
-	public void RunRequest() throws Exception {	
-		
+	public void RunRequest() throws Exception {			
 
 		try {
 			System.out.println("Starts Production execution");
-
 			System.setProperty("webdriver.chrome.driver", config.getChromePath());
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
@@ -124,16 +112,16 @@ public class CreateRequest {
 			// Click on Add New Print Request
 
 			// wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(.,'Add New Print Request ')]")));
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 			driver.findElement(By.xpath("//button[contains(.,'Add New Print Request ')]")).click();
 			System.out.println("Clicked on Add New Print Request");
 			int printRequest = driver.findElements(By.name("printRequestName")).size();
 			util.passIfPresent(driver,printRequest, 5);
 					
-//		Save Print Request
+			// Save Print Request
 			driver.findElement(By.name("printRequestName")).sendKeys("Auto Print Request");
 			driver.findElement(By.xpath("//button[contains(.,'Save')]")).click();
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 			int isenabled = driver.findElements(By.xpath("//button[contains(.,'Add New Print Item ')]")).size();
 			util.passIfPresent(driver,isenabled, 6);
 			
@@ -142,7 +130,7 @@ public class CreateRequest {
 			int printitem = driver.findElements(By.name("printItemTypeCode")).size();
 			util.passIfPresent(driver,printitem, 7);
 			System.out.println("Clicked on Add New Print Item");
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 
 			// Select request and report type and save.
 			Select requesttype = new Select(driver.findElement(By.name("printItemTypeCode")));
@@ -223,6 +211,7 @@ public class CreateRequest {
 			int rueldelete = driver.findElements(By.xpath("//label[contains(text(),'Logical Operator')]")).size();
 			util.passIfAbsent(driver,rueldelete, 15);			
 
+ 
 			// Again Add Rule
 			driver.findElement(By.xpath("(//button[contains(.,' Add Rule ')])[2]")).click();
 			Select fieldname1 = new Select(driver.findElement(By.xpath("(//select[@name='fieldName'])[3]")));
@@ -240,6 +229,7 @@ public class CreateRequest {
 			int deletegrp = driver.findElements(By.xpath("(//button[contains(.,'Remove Group ')])[2]")).size();
 			util.passIfAbsent(driver,deletegrp, 17);
 			
+			/*
 			driver.findElement(By.xpath("//button[contains(.,' Add Group ')]")).click();
 			Select fieldname2 = new Select(driver.findElement(By.xpath("(//select[@name='fieldName'])[4]")));
 			fieldname2.selectByVisibleText("ZipCode");
@@ -249,11 +239,12 @@ public class CreateRequest {
 			driver.findElement(By.xpath("(//button[contains(.,' Add Rule ')])[3]")).click();
 			Select fieldname3 = new Select(driver.findElement(By.xpath("(//select[@name='fieldName'])[5]")));
 			fieldname3.selectByVisibleText("Address");
+			Thread.sleep(3000);
 			Select comparsion3 = new Select(driver.findElement(By.xpath("(//select[@name='operator'])[4]")));
-			comparsion3.selectByVisibleText("is not blank/empty");
+			comparsion3.selectByVisibleText("is not blank/empty");*/
 			driver.findElement(By.xpath("(//button[contains(.,'Save and Continue')])[4]")).click();
 			System.out.println("Quick Criteria Selection sorting is added");
-			Thread.sleep(3000);					
+			Thread.sleep(2000);					
 
 			// Started 'Advanced Criteria Selection'
 			if (!driver.findElement(By.xpath("//li/a[contains(.,'Cancelled')]")).isDisplayed())
@@ -268,18 +259,20 @@ public class CreateRequest {
 			driver.findElement(By.xpath("//li/a[contains(.,'Cancelled')]")).click();
 
 			js.executeScript("arguments[0].scrollIntoView();",
-					driver.findElement(By.xpath("//a[contains(.,'Advanced Criteria Selection')]")));
+			driver.findElement(By.xpath("//a[contains(.,'Advanced Criteria Selection')]")));
 
 			Select andor = new Select(driver.findElement(By.xpath("//div/label[contains(.,'And/Or')]/child::select")));
 			andor.selectByValue("OR");
+			Thread.sleep(2000);
 			
-			Select fieldname4 = new Select(driver.findElement(By.xpath("(//select[@name='fieldName'])[2]")));
+			Select fieldname4 = new Select(driver.findElement(By.xpath("(//select[@name='fieldName'])[4]")));
 			fieldname4.selectByVisibleText("Address");
+			Thread.sleep(2000);
 			
-			Select comparsion4 = new Select(driver.findElement(By.xpath("(//select[@name='operator'])")));
+			Select comparsion4 = new Select(driver.findElement(By.xpath("(//select[@name='operator'])[3]")));
 			comparsion4.selectByVisibleText("is not blank/empty");
 			
-			driver.findElement(By.xpath("(//button[contains(.,'Add ')])[3]")).click();
+			driver.findElement(By.xpath("(//button[contains(.,'Add ')])[5]")).click();
 			driver.findElement(By.xpath("//a[contains(.,'Advanced Criteria Selection')]/following-sibling::div/div/button[2]")).click();
 			int advquicksave = driver.findElements(By.xpath("//a[contains(.,'Advanced Criteria Selection')]/following-sibling::div/div/button[2]")).size();
 			util.passIfPresent(driver,advquicksave, 19);
@@ -294,7 +287,7 @@ public class CreateRequest {
 
 			// DateFormat date = new SimpleDateFormat("dd");
 			Date curdate = new Date();
-			int todat = curdate.getDate() + 1;
+			int todat = curdate.getDate();
 			// String dateFormatted = date.format(curdate);
 			System.out.println("Date value = " + todat);
 			driver.findElement(By.xpath("(//div[contains(@class,'column day text-center ng-star-inserted')])[" + todat + "]")).click();
@@ -303,6 +296,9 @@ public class CreateRequest {
 			driver.findElement(By.xpath("//div[contains(@class,'column day text-center ng-star-inserted')]")).click();
 			System.out.println("Entered Schedule Type, Start & End date");
 
+			driver.findElement(By.xpath("(//button[contains(.,'Save Production Request')])[2]")).click();
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//span[contains(@class,'ng-tns-c3')]")).click();
 			driver.findElement(By.xpath("(//button[contains(.,'Save Production Request')])[2]")).click();
 			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[contains(.,'Save Production Request')])[2]")));
 			Thread.sleep(3000);
@@ -315,8 +311,7 @@ public class CreateRequest {
 			driver.findElement(By.xpath("(//button[contains(.,'Back ')])[2]")).click();
 			
 //		// Search Production Request
-//		String prodreqname = "Auto Test Request 6079"; // TO debug 
-//		Thread.sleep(5000);
+
 			wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//label[contains(text(),'Request Name')]/input"))));
 			int search = driver.findElements(By.xpath("//input[@type='search']")).size();
 			util.passIfPresent(driver,search, 21);
@@ -325,9 +320,7 @@ public class CreateRequest {
 			Select statustype = new Select(driver.findElement(By.xpath("//label[contains(.,'Status Type')]/select")));
 			statustype.selectByValue("C");
 			Thread.sleep(2000);
-//		System.out.println("Searched Request Name: " + driver.findElement(By.xpath("//a[@role='button']")).getText());
 			String expectedName = driver.findElement(By.xpath("//a[@role='button']")).getText();
-
 					
 			if (expectedName.equalsIgnoreCase(prodreqname)) {
 				
