@@ -20,7 +20,8 @@ public class emailReport {
 	@Test
 	public void sendEmail(String testName, String sheetName){
 
-    final String username =  "Chandrasekhar.Kulandasamy@experient-inc.com";
+		final String username = config.LoginCredentails("USERNAME_WITHOUTDOMAIN");
+		final String password = config.LoginCredentails("PASSWORD");
     
 
     Properties props = new Properties();
@@ -32,7 +33,7 @@ public class emailReport {
     Session session = Session.getInstance(props,
             new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, config.getshowManagerPsw());
+                    return new PasswordAuthentication(username, password);
                 }
             });
 
@@ -41,9 +42,9 @@ public class emailReport {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(username));
         
-//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Chandrasekar.kulandasamy@infinite.com,sreejak@infinite.com"));
+//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("Chandrasekhar.Kulandasamy@experient-inc.com,sreejak@infinite.com,Sirasanambati.Anudeep@infinite.com"));
         
-        message.setRecipients(Message.RecipientType.TO,	InternetAddress.parse("Chandrasekar.kulandasamy@infinite.com"));
+        message.setRecipients(Message.RecipientType.TO,	InternetAddress.parse("Chandrasekhar.Kulandasamy@experient-inc.com"));
         
         message.setSubject("Automation Report for New Production View - " + testName );
         
